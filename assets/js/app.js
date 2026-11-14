@@ -412,7 +412,7 @@
       }
 
       if (!VECTOR) {
-        map.addSource("labels", sources.labels);
+        if (!map.getSource("labels")) map.addSource("labels", sources.labels);
         map.addLayer({ id: "base-labels", type: "raster", source: "labels", paint: { "raster-opacity": 0.85 } });
       }
 
