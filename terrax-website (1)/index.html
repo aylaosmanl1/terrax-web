@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TerraX: Searching our own planet for the Moon and Mars</title>
+  <meta name="description" content="TerraX searched the entire Earth with open NASA data, rediscovered the Atacama on its own, found two less-studied Mars analogs in Peru and Egypt, and shows where any place resembles Mars or the Moon, and where it does not." />
+  <meta name="theme-color" content="#07090F" />
+  <meta property="og:title" content="TerraX: Searching our own planet for the Moon and Mars" />
+  <meta property="og:description" content="NASA Space Apps Challenge 2026 · Vilnius. Earth analogs for future Moon bases and Mars landing sites, from open NASA data." />
+  <meta property="og:image" content="assets/img/hotspots-map.jpg" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" href="assets/brand/terrax-favicon-standard-dark.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- ================= HEADER ================= -->
+  <header class="topbar" id="top">
+    <a class="brand" href="#top" aria-label="TerraX home">
+      <img class="logo logo--dark" src="assets/brand/terrax-wordmark-standard-dark.svg" alt="TerraX" />
+      <img class="logo logo--light" src="assets/brand/terrax-wordmark-standard-light.svg" alt="TerraX" />
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#method">Method</a>
+      <a href="#discoveries">Discoveries</a>
+      <a href="#explore">Map</a>
+      <a href="#moon">Moon</a>
+      <a href="#app">App</a>
+      <a href="#team">Team</a>
+    </nav>
+    <div class="topbar__actions">
+      <button class="icon-btn" id="themeToggle" aria-label="Switch to light mode" title="Switch theme">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+      </button>
+      <a class="btn btn--primary btn--sm" data-link="app" href="#app" target="_blank" rel="noopener">Open the app</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <div class="hero__bg" aria-hidden="true"><img src="assets/img/hotspots-map.jpg" alt="" /></div>
+      <div class="container hero__content">
+        <p class="eyebrow">NASA Space Apps Challenge 2026 · Vilnius</p>
+        <h1>Searching our own planet for the Moon and Mars</h1>
+        <p class="lead">TerraX searched the entire Earth with open NASA data, rediscovered the Atacama on its own, found two less-studied Mars analogs in Peru and Egypt, and shows for any place on the planet exactly where it resembles Mars or the Moon, and where it does not.</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" data-link="app" href="#app" target="_blank" rel="noopener">Open the app</a>
+          <a class="btn btn--ghost" data-link="report" href="#" target="_blank" rel="noopener">Read the report</a>
+          <a class="btn btn--ghost" href="#explore">Explore the sites</a>
+        </div>
+        <p class="hero__caption mono">Background: the 30 strongest hotspot regions vs Jezero Crater (magenta), v1 global map</p>
+      </div>
+    </section>
+
+    <!-- ================= KEY NUMBERS ================= -->
+    <section class="section section--tight" id="numbers" aria-label="TerraX at a glance">
+      <div class="container">
+        <div class="tiles">
+          <div class="tile reveal"><span class="tile__num">5</span><span class="tile__label">dimensions</span><p>Terrain, temperature, surface brightness, bare ground, dryness</p></div>
+          <div class="tile reveal"><span class="tile__num">5</span><span class="tile__label">targets</span><p>Jezero, Gale, Arabia Terra, Chryse/Acidalia (Mars); lunar south pole near Shackleton (Moon)</p></div>
+          <div class="tile reveal"><span class="tile__num">5 km</span><span class="tile__label">every pixel of land</span><p>The whole planet was scored, not a sample</p></div>
+          <div class="tile tile--accent reveal"><span class="tile__num">34,125 km²</span><span class="tile__label">largest hotspot on Earth</span><p>The core Atacama, found without being told</p></div>
+          <div class="tile reveal"><span class="tile__num">≈ 74<small>/100</small></span><span class="tile__label">Ica Desert, Peru</span><p>The best match to Jezero Crater among our scored sites (v2)</p></div>
+          <div class="tile reveal"><span class="tile__num">≈ 14,000 km²</span><span class="tile__label">Egypt's Eastern Desert</span><p>A large, less-studied Mars-analog region</p></div>
+          <div class="tile reveal"><span class="tile__num">≈ 58 <small>vs</small> ≈ 74</span><span class="tile__label">Moon vs Mars</span><p>Best Earth match for the Moon vs for Mars: Earth is a weaker Moon analog</p></div>
+          <div class="tile reveal"><span class="tile__num">8–16<small>/100</small></span><span class="tile__label">thermal similarity</span><p>At the best Mars hotspots: where every analog breaks</p></div>
+          <div class="tile reveal"><span class="tile__num">100%</span><span class="tile__label">open data</span><p>NASA, ESA, USGS and TerraClimate datasets</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CHALLENGE ================= -->
+    <section class="section" id="challenge">
+      <div class="container split">
+        <header class="section__head reveal">
+          <p class="eyebrow mono">01 · The challenge</p>
+          <h2>No place on Earth matches another planet perfectly</h2>
+        </header>
+        <div class="reveal">
+          <p class="body-lg">NASA asked teams to use open Earth, Moon and Mars data to identify and characterise new terrestrial analogs for future Moon bases and Mars landing sites. Known analogs such as the Atacama Desert, Haughton Crater and Death Valley are well studied, but no place on Earth matches another planet perfectly, and the best analogs may be places nobody has examined.</p>
+          <p class="muted" style="margin-top:20px">The challenge asked for three things, which shaped every decision we made:</p>
+          <ol class="asks">
+            <li><strong>Search systematically,</strong> not just rediscover famous sites.</li>
+            <li><strong>Explain with data</strong> why a place is analogous, beyond visual similarity.</li>
+            <li><strong>Say where the analogy breaks:</strong> gravity, atmosphere, radiation, temperature.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= METHOD ================= -->
+    <section class="section section--alt" id="method">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow mono">02 · Our method</p>
+          <h2>A fingerprint for every place</h2>
+          <p class="section__lead">We describe every place on Earth, Mars and the Moon with the same set of measurable numbers, a fingerprint. Comparing fingerprints tells us how similar two places are, dimension by dimension.</p>
+        </header>
+
+        <div class="dims">
+          <article class="dim reveal"><span class="dim__n mono">01</span><h3>Terrain</h3><p>Mean slope, roughness, local relief (500 m, 8×8 km patches)</p><p class="dim__data mono">Copernicus DEM + NASA SRTM (sites) · USGS GMTED2010 (global)</p><p class="dim__why">Landing, mobility, construction</p></article>
+          <article class="dim reveal"><span class="dim__n mono">02</span><h3>Thermal</h3><p>Day–night surface temperature swing, yearly max and min</p><p class="dim__data mono">NASA MODIS MOD11A2</p><p class="dim__why">Instrument and habitat stress</p></article>
+          <article class="dim reveal"><span class="dim__n mono">03</span><h3>Surface</h3><p>Albedo (brightness)</p><p class="dim__data mono">NASA MODIS MCD43A3</p><p class="dim__why">Proxy for dust and rock type</p></article>
+          <article class="dim reveal"><span class="dim__n mono">04</span><h3>Bare ground</h3><p>Vegetation index (NDVI)</p><p class="dim__data mono">NASA MODIS MOD13A1</p><p class="dim__why">Mars and the Moon have no plants</p></article>
+          <article class="dim reveal"><span class="dim__n mono">05</span><h3>Dryness</h3><p>Mean annual rainfall 2013–2022</p><p class="dim__data mono">TerraClimate</p><p class="dim__why">Water and habitability</p></article>
+        </div>
+
+        <h3 class="sub reveal">The five targets</h3>
+        <div class="targets reveal" id="targetChips"></div>
+        <p class="note reveal">Jezero and the lunar south pole use terrain measured from NASA MOLA and LOLA elevation data with exactly the same definitions as on Earth (500 m resolution, 8 × 8 km patches). Gale, Arabia Terra and Chryse/Acidalia use estimates from published data. Temperature and albedo targets come from published mission data (MOLA, TES, THEMIS, Curiosity REMS, Perseverance MEDA, Diviner).</p>
+
+        <div class="scoring reveal">
+          <div>
+            <h3 class="sub">How a score is made</h3>
+            <ul class="bullets">
+              <li><strong>Closeness</strong> (terrain, surface): 100 when the Earth value equals the target value, falling smoothly as they differ.</li>
+              <li><strong>Thermal:</strong> for Mars, the share of the target's day–night swing and cold that Earth reaches, plus closeness of maximum temperature. For the Moon, mostly how close Earth gets to the target's cold.</li>
+              <li><strong>Bare ground:</strong> NDVI of 0.08 (bare soil) or less = 100; 0.33 or more = 0.</li>
+              <li><strong>Dryness:</strong> about 1 mm/year ≈ 90, 100 mm ≈ 33, 1,000 mm = 0.</li>
+              <li><strong>Total:</strong> a weighted average, with weights that depend on the target body.</li>
+            </ul>
+          </div>
+          <div class="weights" role="table" aria-label="Weights by target body">
+            <div class="weights__row weights__head" role="row"><span role="columnheader">Weights</span><span role="columnheader">Mars</span><span role="columnheader">Moon</span></div>
+            <div class="weights__row" role="row"><span role="cell">Terrain</span><span role="cell"><i style="--w:25%"></i>25%</span><span role="cell"><i style="--w:25%"></i>25%</span></div>
+            <div class="weights__row" role="row"><span role="cell">Thermal</span><span role="cell"><i style="--w:20%"></i>20%</span><span role="cell"><i style="--w:40%"></i>40%</span></div>
+            <div class="weights__row" role="row"><span role="cell">Surface</span><span role="cell"><i style="--w:15%"></i>15%</span><span role="cell"><i style="--w:10%"></i>10%</span></div>
+            <div class="weights__row" role="row"><span role="cell">Bare ground</span><span role="cell"><i style="--w:15%"></i>15%</span><span role="cell"><i style="--w:15%"></i>15%</span></div>
+            <div class="weights__row" role="row"><span role="cell">Dryness</span><span role="cell"><i style="--w:25%"></i>25%</span><span role="cell"><i style="--w:10%"></i>10%</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= IT CORRECTED US ================= -->
+    <section class="section" id="corrected">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow mono">03 · Validation</p>
+          <h2>The method corrected us, twice</h2>
+          <blockquote class="quote">A method that can be wrong, and show you why, is a method you can trust.</blockquote>
+        </header>
+
+        <div class="story">
+          <article class="story__step reveal">
+            <span class="story__tag mono">The day the Atacama came last</span>
+            <p>Our first version ranked the world's most famous Mars analog last among eight sites. Instead of hiding it, we asked why: we were not measuring dryness, and our bare-ground formula punished bare soil. After the fix, <strong>the Atacama rose to #2</strong>.</p>
+            <div class="beforeafter">
+              <figure><img src="assets/img/v1-atacama-last.png" alt="Bar chart: in v1 the Atacama (rightmost) ranks last among eight sites" loading="lazy" /><figcaption>v1: Atacama last (right)</figcaption></figure>
+              <span class="arrow" aria-hidden="true">→</span>
+              <figure><img src="assets/img/v1-after-dryness.png" alt="Bar chart after adding dryness: the Atacama ranks #2" loading="lazy" /><figcaption>After adding dryness: Atacama #2</figcaption></figure>
+            </div>
+          </article>
+          <article class="story__step reveal">
+            <span class="story__tag mono">The Moon plays by different rules</span>
+            <p>At the lunar poles extreme cold matters more than the daily swing, and dryness matters less. With Moon-specific weights the cold polar sites rose:</p>
+            <div class="moves">
+              <div><strong>Haughton</strong><span class="mono">6th → 2nd</span></div>
+              <div><strong>McMurdo</strong><span class="mono">5th → 3rd</span></div>
+            </div>
+          </article>
+          <article class="story__step reveal">
+            <span class="story__tag mono">Version 2: measured like NASA measures Mars</span>
+            <p>With Firuddin's NASA MOLA and LOLA measurements, we re-measured Earth's terrain using exactly the same definitions and added local relief. The results became consistent between the site analysis and the global search.</p>
+          </article>
+        </div>
+
+        <div class="rank-grid">
+          <figure class="rank reveal">
+            <figcaption><h3>v2 · Earth sites vs Jezero Crater (Mars)</h3><span class="muted">Total similarity, 0–100</span></figcaption>
+            <div class="bars-chart" id="rankJezero"></div>
+            <details class="figure-src"><summary>Original chart</summary><img src="assets/img/v2-vs-jezero.png" alt="Original v2 chart of Earth sites vs Jezero Crater by dimension" loading="lazy" /></details>
+          </figure>
+          <figure class="rank reveal">
+            <figcaption><h3>v2 · Earth sites vs the lunar south pole (Moon)</h3><span class="muted">Total similarity, 0–100</span></figcaption>
+            <div class="bars-chart" id="rankMoon"></div>
+            <details class="figure-src"><summary>Original chart</summary><img src="assets/img/v2-vs-moon.png" alt="Original v2 chart of Earth sites vs the lunar south polar region by dimension" loading="lazy" /></details>
+          </figure>
+        </div>
+        <div class="cat-legend reveal" aria-label="Legend">
+          <span><i class="dot dot--known"></i>Known analog</span>
+          <span><i class="dot dot--discovery"></i>TerraX discovery</span>
+          <span><i class="dot dot--case"></i>Case-study site</span>
+          <span><i class="dot dot--range"></i>Group of sites (range)</span>
+          <span class="muted">≈ read from charts</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= GLOBAL MAP ================= -->
+    <section class="section section--alt" id="global-map">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow mono">04 · The global map</p>
+          <h2>Reading Earth like a new atlas</h2>
+          <p class="section__lead">The same fingerprint and scoring were applied to every 5 km pixel of land on Earth, with oceans, permanent ice sheets and cities masked out. One global map was produced for each target.</p>
+        </header>
+        <figure class="mapfig reveal">
+          <img src="assets/img/heatmap-jezero.jpg" alt="Similarity to Jezero Crater across North Africa and the Middle East, from blue (low) to red (high)" loading="lazy" />
+          <figcaption>
+            <span>Similarity to Jezero Crater, North Africa and the Middle East</span>
+            <span class="ramp-legend"><span class="mono">low</span><span class="ramp ramp--rdylbu"></span><span class="mono">high</span></span>
+          </figcaption>
+        </figure>
+        <div class="obs">
+          <article class="reveal"><h3>Not every desert is Mars-like</h3><p>Bright sand seas (Sahara ergs, Arabia's Empty Quarter) score low because sand is far brighter than the Martian surface. Dark rocky deserts and lava fields score high.</p></article>
+          <article class="reveal"><h3>Mountains and farmland fall away</h3><p>Too steep, too wet, too green.</p></article>
+          <article class="reveal"><h3>Dark lava lights up</h3><p>Volcanic fields (harrats) in western Saudi Arabia appear warm; basalt is the most common rock on Mars.</p></article>
+          <article class="reveal"><h3>Cold deserts rise for the Moon</h3><p>The Tarim Basin and Gobi show up strongly against cold targets.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DISCOVERIES ================= -->
+    <section class="section" id="discoveries">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow mono">05 · Discoveries</p>
+          <h2>We never told TerraX where the famous analogs are. It found the Atacama on its own.</h2>
+          <p class="section__lead">An algorithm grouped neighbouring pixels scoring 70 or more into hotspot regions, measured each region's size and mean scores, and ranked them. It was never told where the known analogs are.</p>
+        </header>
+        <figure class="mapfig mapfig--wide reveal">
+          <img src="assets/img/hotspots-map.jpg" alt="World map of similarity to Jezero Crater with the 30 strongest hotspot regions marked in magenta" loading="lazy" />
+          <figcaption><span>The 30 strongest hotspot regions vs Jezero Crater (magenta, v1)</span><span class="ramp-legend"><span class="mono">low</span><span class="ramp ramp--rdylbu"></span><span class="mono">high</span></span></figcaption>
+        </figure>
+
+        <div class="disc">
+          <article class="disc__card reveal">
+            <span class="badge badge--known">Discovery 1</span>
+            <h3>The planet found the Atacama on its own</h3>
+            <p class="disc__big">34,125 km²</p>
+            <p>The single largest hotspot on Earth is the core Atacama Desert, where NASA and other agencies test Mars rovers and life-detection instruments. This blind result is our strongest independent validation.</p>
+            <button class="link-btn" data-jump="atacama-yungay">Show on the map →</button>
+          </article>
+          <article class="disc__card reveal">
+            <span class="badge badge--discovery">Discovery 2</span>
+            <h3>The Ica Desert, Peru</h3>
+            <p class="disc__big">≈ 74<small>/100 vs Jezero</small></p>
+            <p>The northern continuation of the Atacama, and the highest of all our scored sites, above the Atacama. Its Ica and Nazca–Marcona areas appear far less often in analog research than the Chilean Atacama.</p>
+            <button class="link-btn" data-jump="ica-desert">Show on the map →</button>
+          </article>
+          <article class="disc__card disc__card--wide reveal">
+            <span class="badge badge--discovery">Discovery 3</span>
+            <h3>Egypt's Eastern Desert</h3>
+            <p class="disc__big">≈ 14,000 km² · ≈ 67<small>/100 vs Jezero</small></p>
+            <p>Hyper-arid rocky mountains and dry wadis between Aswan, Edfu and the Red Sea. It scores level with the Atacama against Jezero, and it lights up again against the Arabia Terra target. A sample point (25.64°N, 33.68°E) scores 70/100:</p>
+            <div class="mini-bars" id="egyptBars" aria-label="Score breakdown at 25.64°N, 33.68°E"></div>
+            <figure class="shot"><img src="assets/img/app-egypt-click.jpg" alt="The TerraX app with a click in Egypt's Eastern Desert and its score breakdown" loading="lazy" /><figcaption>One click in Egypt's Eastern Desert, with its score breakdown</figcaption></figure>
+            <button class="link-btn" data-jump="eastern-desert">Show on the map →</button>
+          </article>
+          <article class="disc__card disc__card--case reveal">
+            <span class="badge badge--case">Case study</span>
+            <h3>Gobustan, Azerbaijan: a process analog</h3>
+            <p>Gobustan holds one of the world's largest concentrations of mud volcanoes. On Mars, mud volcanism is a leading explanation for thousands of mounds in Arabia Terra and Chryse/Acidalia, linked to subsurface fluids, methane and possible biosignatures.</p>
+            <dl class="facts">
+              <div><dt>Measured at</dt><dd class="mono">Dashgil field · 39.996°N, 49.403°E</dd></div>
+              <div><dt>Surface max</dt><dd>≈ 318 K (+45 °C)</dd></div>
+              <div><dt>Surface min</dt><dd>≈ 269 K (−4 °C)</dd></div>
+              <div><dt>NDVI</dt><dd>≈ 0.15</dd></div>
+              <div><dt>Day–night swing</dt><dd>≈ 14 K</dd></div>
+              <div><dt>Total vs Jezero</dt><dd>≈ 56/100</dd></div>
+            </dl>
+            <p class="muted">Gobustan is not the most similar place overall, because it gets far more rain than the Atacama. Its value is as a natural laboratory for interpreting Martian mounds, testing methane and fluid-sampling instruments, and training rovers on soft mud breccia. The analogy breaks because its volcanoes are driven by hydrocarbons, under a thick atmosphere and full Earth gravity.</p>
+            <button class="link-btn" data-jump="gobustan-dashgil">Show on the map →</button>
+          </article>
+        </div>
+
+        <h3 class="sub reveal">Top 10 hotspot regions vs Jezero Crater (v1)</h3>
+        <div class="table-wrap reveal">
+          <table class="data-table" id="hotspotTable">
+            <thead><tr><th>#</th><th>Lat, Lon</th><th>Place</th><th class="num">Area (km²)</th><th>Type</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="note reveal">This table comes from the v1 global map. The v2 hotspot search, with automatic tagging against a catalogue of 21 established analog sites, was running at the time of writing. "New candidate" means "outside established field sites", not "never studied".</p>
+        <p class="note reveal">Other case-study sites: <strong>Dasht-e Lut, Iran</strong> ≈ 63/100 vs Jezero, extremely barren, breaks on temperature. <strong>Dallol, Ethiopia</strong> 47/100 vs Arabia Terra, perfectly barren, breaks on temperature (5/100). <strong>Masazır salt lake, Azerbaijan</strong> ≈ 52/100; its box includes surrounding settlements and vegetation.</p>
+      </div>
+    </section>
+
+    <!-- ================= INTERACTIVE MAP ================= -->
+    <section class="map-section" id="explore" aria-label="Interactive map of TerraX sites">
+      <div id="mapCanvas" class="map-canvas"></div>
+      <div class="map-fallback" id="mapFallback" hidden><p><strong>The map could not load.</strong> Check your internet connection.</p></div>
+
+      <aside class="panel filters" id="filters" aria-label="Map controls">
+        <div class="panel__head">
+          <h2 class="panel__title">Explore the sites</h2>
+          <button class="icon-btn icon-btn--sm filters__collapse" id="filtersToggle" aria-expanded="true" aria-controls="filtersBody" aria-label="Collapse controls">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>
+          </button>
+        </div>
+        <div class="filters__body" id="filtersBody">
+          <div class="field">
+            <span class="label">Scores shown against</span>
+            <div class="seg" role="group" aria-label="Target" id="targetSeg">
+              <button data-target="jezero" class="is-on">Jezero (Mars)</button>
+              <button data-target="moon">Lunar south pole</button>
+            </div>
+          </div>
+          <div class="field">
+            <span class="label">Jump to a site</span>
+            <div class="chips" id="jumpChips">
+              <button class="chip" data-jump="ica-desert">Ica</button>
+              <button class="chip" data-jump="eastern-desert">Eastern Desert</button>
+              <button class="chip" data-jump="atacama-yungay">Atacama</button>
+              <button class="chip" data-jump="mcmurdo">McMurdo</button>
+              <button class="chip" data-jump="gobustan-dashgil">Gobustan</button>
+            </div>
+          </div>
+          <div class="field">
+            <span class="label">Layers</span>
+            <label class="toggle"><input type="checkbox" id="layerHotspots" checked /> <span><i class="ring"></i>Hotspot regions (v1, top 10)</span></label>
+            <label class="toggle"><input type="checkbox" id="layerCatalogue" checked /> <span><i class="dot dot--cat"></i>Known-analog catalogue (21)</span></label>
+            <div class="seg seg--small" role="group" aria-label="Base map" id="baseSeg">
+              <button data-base="satellite" class="is-on">Satellite</button>
+              <button data-base="dark">Dark</button>
+              <button data-base="light">Light</button>
+            </div>
+          </div>
+          <div class="mini-legend" aria-label="Legend">
+            <div class="legend__row"><i class="dot dot--known"></i>Known analog (scored)</div>
+            <div class="legend__row"><i class="dot dot--discovery"></i>TerraX discovery</div>
+            <div class="legend__row"><i class="dot dot--case"></i>Case-study site</div>
+            <div class="legend__row muted">Bigger dot = higher score</div>
+            <div class="legend__row"><i class="ring"></i>Hotspot region, true area (dashed = verify)</div>
+            <div class="legend__ramp" id="analogLegend" hidden><span class="legend__label">Similarity</span><span class="ramp ramp--rdylbu"></span><span class="ramp__ticks mono"><i>low</i><i>high</i></span></div>
+          </div>
+        </div>
+      </aside>
+
+      <aside class="panel drawer" id="drawer" aria-label="Site details" aria-hidden="true">
+        <button class="icon-btn icon-btn--sm drawer__close" id="drawerClose" aria-label="Close details">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+        <div id="drawerBody"></div>
+      </aside>
+    </section>
+
+    <!-- ================= MOON ================= -->
+    <section class="section" id="moon">
+      <div class="container split">
+        <header class="section__head reveal">
+          <p class="eyebrow mono">06 · The Moon</p>
+          <h2>Earth is a much better rehearsal ground for Mars than for the Moon.</h2>
+        </header>
+        <div class="reveal">
+          <ul class="bullets bullets--lg">
+            <li>Earth is a much weaker analog for the Moon than for Mars: the best Moon match is <strong>about 58/100</strong>, against about 74 for Mars.</li>
+            <li>The best Moon match is the <strong>McMurdo Dry Valleys</strong>: cold, rugged and barren. Its steep relief matches the lunar south pole's ~1,030 m local relief.</li>
+            <li>No place on Earth is airless, and nothing approaches the ~40 K cold of permanently shadowed lunar craters.</li>
+          </ul>
+          <div class="moonloc">
+            <div class="moonloc__mark" aria-hidden="true">
+              <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" fill="none" stroke="currentColor" stroke-opacity=".3"/><circle cx="60" cy="60" r="2.5" fill="currentColor"/><circle cx="84" cy="70" r="16" fill="none" stroke="currentColor" stroke-dasharray="3 3" stroke-opacity=".6"/><rect x="48" y="66" width="14" height="14" fill="var(--mars)" opacity=".85"/></svg>
+            </div>
+            <div>
+              <p class="mono moonloc__coords">89.46°S · 222.5°E</p>
+              <p>The Moon reference is real NASA LOLA terrain: a 16 × 16 km tile about 16 km from the south pole and about 20 km from the centre of Shackleton crater. Its edge comes within 1–2 km of Shackleton's rim, covering the terrain just outside the crater, in the region studied for Artemis base camps.</p>
+              <p class="muted mono" style="font-size:12px;margin-top:8px">Schematic, not to scale: pole · Shackleton (dashed) · LOLA tile</p>
+            </div>
+          </div>
+          <button class="link-btn" data-jump="mcmurdo" data-target-switch="moon">Show McMurdo against the Moon on the map →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WHERE IT BREAKS ================= -->
+    <section class="section section--alt" id="breaks">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow mono">07 · Where the analogy breaks</p>
+          <h2>Even Earth's best Mars analog breaks on temperature.</h2>
+        </header>
+        <div class="two-col">
+          <div class="reveal">
+            <h3 class="sub">Limits of Earth</h3>
+            <ul class="bullets">
+              <li><strong>Temperature:</strong> even the best Mars hotspots score only 8–16/100 on thermal similarity.</li>
+              <li><strong>Gravity</strong> (Mars 0.38 g, Moon 0.17 g), <strong>vacuum and thin CO₂ air</strong>, and <strong>space radiation</strong> cannot be reproduced anywhere on Earth.</li>
+              <li>The Moon is harder than Mars (≈ 58 vs ≈ 74).</li>
+            </ul>
+          </div>
+          <div class="reveal">
+            <h3 class="sub">Limits of our method</h3>
+            <ul class="bullets">
+              <li>Only Jezero and the lunar south pole have measured terrain; Gale, Arabia Terra and Chryse/Acidalia use estimates. All temperature and albedo targets come from published mission data.</li>
+              <li>The Moon reference covers 9 overlapping patches from one 16 × 16 km tile; the patches are not independent.</li>
+              <li>5 km resolution averages away small features (single craters, lava tubes).</li>
+              <li>Mixed water–land pixels can create false hotspots (Lake Nasser).</li>
+              <li>Weights are scientific choices; different missions would weight dimensions differently.</li>
+              <li>TerraX measures environment and terrain, not impact history, mineralogy or caves. That is why Haughton Crater, an impact-crater analog, scores low.</li>
+              <li>The known-analog catalogue covers major field sites, not every published study, so "new candidate" means "outside established field sites", not "never studied".</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= APP ================= -->
+    <section class="section" id="app">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow mono">08 · Try the app</p>
+          <h2>Click anywhere on Earth and see why it matches</h2>
+          <p class="section__lead">A public web app built on Google Earth Engine.</p>
+        </header>
+        <div class="app-grid">
+          <ul class="bullets reveal">
+            <li>A world map coloring every 5 km of land by similarity to the chosen target (blue = low, red = high).</li>
+            <li>A target menu: Jezero, Gale, Arabia Terra, Chryse/Acidalia, lunar south pole near Shackleton.</li>
+            <li>Pins: known analogs, TerraX discoveries, case-study sites.</li>
+            <li>Click anywhere: total score, a chart of the five dimensions in plain language, where the analogy works best and where it breaks.</li>
+            <li>"Jump to a site" buttons: Ica, Eastern Desert, Atacama, McMurdo, Gobustan.</li>
+            <li>A reminder of what Earth cannot reproduce: low gravity, vacuum or thin CO₂ air, space radiation.</li>
+          </ul>
+          <figure class="shot reveal"><img src="assets/img/app-arabia-dallol.jpg" alt="The public TerraX app with target Arabia Terra and Dallol clicked, scoring 47/100" loading="lazy" /><figcaption>The public TerraX app (target Arabia Terra; Dallol clicked: 47/100)</figcaption></figure>
+        </div>
+        <div class="app-cta reveal">
+          <a class="btn btn--primary btn--xl" data-link="app" href="#" target="_blank" rel="noopener">Open the TerraX app ↗</a>
+          <p class="muted">Version 2 of the app (measured terrain, discovery pins, jump buttons, plain-language labels) goes live once the v2 global maps finish exporting.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NEXT ================= -->
+    <section class="section section--alt" id="next">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow mono">09 · What comes next</p>
+          <h2>From a hackathon map to a mission tool</h2>
+        </header>
+        <ol class="next">
+          <li class="reveal">Measure Gale, Arabia Terra and Chryse/Acidalia terrain from NASA MOLA/HRSC the same way as Jezero.</li>
+          <li class="reveal">Add mineralogy (ASTER emissivity) to separate basalt, sandstone and salt.</li>
+          <li class="reveal">Add an unsupervised method (k-means on global fingerprints) as an independent cross-check.</li>
+          <li class="reveal">Verify new candidates with high-resolution imagery and field visits.</li>
+          <li class="reveal">Let users set their own weights for rover, landing or habitat use cases.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= BEHIND THE SCENES ================= -->
+    <section class="section" id="behind">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow mono">10 · Behind the scenes</p>
+          <h2>Real data is messy</h2>
+          <p class="section__lead">How the day unfolded, and the problems that made TerraX more reliable.</p>
+        </header>
+        <ol class="timeline reveal">
+          <li><span class="mono">11:00</span>Read the challenge; chose the "fingerprint" approach; named the project TerraX</li>
+          <li><span class="mono">11:30</span>First Earth measurements in Google Earth Engine (8 sites)</li>
+          <li><span class="mono">11:40</span>Fixed the first data problems: sea in the Gobustan box, missing DEM over Azerbaijan, Antarctica masked out</li>
+          <li><span class="mono">12:00</span>First scoring: the Atacama ranked last. Added aridity: it rose to #2</li>
+          <li><span class="mono">12:10</span>Moon validation: added Moon-specific weights. Haughton 6th → 2nd, McMurdo 5th → 3rd</li>
+          <li><span class="mono">12:20</span>Scaled the same method to every 5 km of land on Earth</li>
+          <li><span class="mono">12:45</span>Global maps exported for 5 targets (13–26 minutes each)</li>
+          <li><span class="mono">13:05</span>TerraX app working: world map, target menu, click-for-scores</li>
+          <li><span class="mono">13:30</span>Hotspot search: 30 strongest regions; the Atacama found blind; Egypt and Peru emerge</li>
+          <li><span class="mono">13:55</span>App published publicly</li>
+          <li><span class="mono">14:20</span>Firuddin's NASA MOLA/LOLA terrain measurements arrive</li>
+          <li><span class="mono">14:45</span>Version 2: Earth terrain re-measured with identical definitions; local relief added</li>
+          <li><span class="mono">14:50</span>v2 results: Ica Desert #1 vs Jezero; McMurdo #1 vs the Moon</li>
+          <li><span class="mono">15:15</span>Moon tile located: 89.46°S, 222.5°E, next to Shackleton crater</li>
+        </ol>
+        <div class="problems">
+          <article class="reveal"><h3>The Gobustan box included the sea</h3><p>Our 10 km box sat on the coast, over sea, a town and a highway. We added a water mask and moved a smaller 5 × 5 km box onto the Dashgil mud volcano field.</p></article>
+          <article class="reveal"><h3>No terrain data for Azerbaijan</h3><p>The Copernicus 30 m elevation model has no public tiles there, so we filled the gap with NASA SRTM.</p></article>
+          <article class="reveal"><h3>Antarctica disappeared</h3><p>The land-cover map we used to mask water does not cover Antarctica, so it removed McMurdo entirely. Missing land cover is now treated as land.</p></article>
+          <article class="reveal"><h3>"User memory limit exceeded"</h3><p>The live preview tried to compute the whole planet at once. Heavy work moved to batch exports; previews run by region.</p></article>
+          <article class="reveal"><h3>The browser froze</h3><p>Panning re-ran the global calculation every time. We switched to exported results and a faster app.</p></article>
+          <article class="reveal"><h3>The app showed no layers</h3><p>The public app could not read our private data. We shared the assets publicly and waited for the deployment.</p></article>
+          <article class="reveal"><h3>Two meanings of "roughness"</h3><p>Our Earth roughness was measured differently from the Mars and Moon data, so version 2 re-measured Earth with identical definitions.</p></article>
+          <article class="reveal"><h3>A false hotspot?</h3><p>Pixels mixing water and land near Lake Nasser can look like hotspots. We flagged them as "verify".</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DATA & TEAM ================= -->
+    <section class="section section--alt" id="team">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow mono">11 · Data and team</p>
+          <h2>Built with 100% open data</h2>
+        </header>
+        <div class="table-wrap reveal">
+          <table class="data-table">
+            <thead><tr><th>Dataset</th><th>Used for</th></tr></thead>
+            <tbody>
+              <tr><td>NASA MODIS MOD11A2 (Terra)</td><td>Land surface temperature</td></tr>
+              <tr><td>NASA MODIS MCD43A3</td><td>Albedo</td></tr>
+              <tr><td>NASA MODIS MOD13A1</td><td>Vegetation index (NDVI)</td></tr>
+              <tr><td>NASA MODIS MCD12Q1</td><td>Land cover mask (water, ice sheets, cities)</td></tr>
+              <tr><td>NASA / USGS SRTM</td><td>Elevation (fills Copernicus gap over Azerbaijan)</td></tr>
+              <tr><td>ESA Copernicus DEM GLO-30</td><td>Elevation for site measurements</td></tr>
+              <tr><td>ESA WorldCover</td><td>Water mask for sites</td></tr>
+              <tr><td>USGS GMTED2010</td><td>Global elevation for the world map</td></tr>
+              <tr><td>TerraClimate (University of Idaho)</td><td>Annual rainfall (dryness)</td></tr>
+              <tr><td>NASA MOLA (Mars Global Surveyor)</td><td>Measured Jezero terrain reference</td></tr>
+              <tr><td>NASA LOLA (Lunar Reconnaissance Orbiter)</td><td>Measured lunar south pole terrain reference</td></tr>
+              <tr><td>NASA TES, THEMIS, Diviner; Curiosity REMS; Perseverance MEDA (published values)</td><td>Target temperatures and albedo</td></tr>
+              <tr><td>Google Earth Engine</td><td>Processing and the public app</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="team__grid">
+          <div>
+            <h3 class="sub reveal">Team TerraX</h3>
+            <div class="members">
+              <div class="member reveal"><span class="avatar mono">M</span><div><strong>Muhammedali Amanzadeh</strong><span class="role">AI engineer · Project lead</span><p>Google Earth Engine pipeline; feature extraction; scoring model; validation; global map; hotspot search; TerraX app</p></div></div>
+              <div class="member reveal"><span class="avatar mono">F</span><div><strong>Firuddin</strong><span class="role">AI engineer</span><p>Processed NASA MOLA (Mars, Jezero) and LOLA (Moon) elevation data at 500 m; defined and measured the terrain reference values; confirmed the Moon tile location; early global terrain screening</p></div></div>
+              <div class="member reveal"><span class="avatar mono">A</span><div><strong>Ayla</strong><span class="role">Multimedia designer</span><p>Visual identity, slides, demo video, website</p></div></div>
+              <div class="member reveal"><span class="avatar mono">A</span><div><strong>Alsu</strong><span class="role">Computer engineer</span><p>Team member</p></div></div>
+            </div>
+          </div>
+          <div class="team__badge reveal">
+            <img class="logo--dark" src="assets/brand/terrax-logomark-azerbaijan-dark.svg" alt="TerraX logomark, Azerbaijan edition" />
+            <img class="logo--light" src="assets/brand/terrax-logomark-azerbaijan-light.svg" alt="TerraX logomark, Azerbaijan edition" />
+            <p class="mono muted">A team from Azerbaijan</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <img class="logo logo--dark" src="assets/brand/terrax-wordmark-standard-dark.svg" alt="TerraX" />
+        <img class="logo logo--light" src="assets/brand/terrax-wordmark-standard-light.svg" alt="TerraX" />
+        <p class="mono footer__tag">PLANETARY ANALOG RESEARCH</p>
+      </div>
+      <div class="footer__links">
+        <a data-link="app" href="#" target="_blank" rel="noopener">TerraX app</a>
+        <a data-link="report" href="#" target="_blank" rel="noopener">Report</a>
+        <a data-link="video" href="#" target="_blank" rel="noopener">Demo video</a>
+        <a data-link="github" href="#" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <p class="footer__note">NASA Space Apps Challenge 2026 · Vilnius · 14 November 2026. Challenge: Earth analogs for future Moon bases and Mars landing sites. Built with open data from NASA, ESA, USGS and TerraClimate. Numbers marked ≈ were read from charts. Map imagery © Esri, Maxar, Earthstar Geographics; © OpenStreetMap contributors, © CARTO.</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

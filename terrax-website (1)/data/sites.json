@@ -1,0 +1,534 @@
+{
+  "_note": "All numbers come from the TerraX Full Project Report (14 Nov 2026). Values marked approx were read from charts (shown as ≈); check them against the final CSV exports. Ranges (e.g. 47-52) are shown as given in the report.",
+  "targets": [
+    {
+      "id": "jezero",
+      "name": "Jezero Crater",
+      "body": "Mars",
+      "slope": "2.27°",
+      "roughness": "7.15 m",
+      "relief": "210 m",
+      "albedo": "0.18",
+      "source": "Measured: NASA MOLA, 576 patches, median",
+      "measured": true
+    },
+    {
+      "id": "gale",
+      "name": "Gale Crater",
+      "body": "Mars",
+      "slope": "3.0°",
+      "roughness": "14 m",
+      "relief": "400 m",
+      "albedo": "0.20",
+      "source": "Estimate from published data",
+      "measured": false
+    },
+    {
+      "id": "arabia",
+      "name": "Arabia Terra mounds",
+      "body": "Mars",
+      "slope": "3.5°",
+      "roughness": "10 m",
+      "relief": "250 m",
+      "albedo": "0.27",
+      "source": "Estimate from published data",
+      "measured": false
+    },
+    {
+      "id": "chryse",
+      "name": "Chryse / Acidalia",
+      "body": "Mars",
+      "slope": "1.0°",
+      "roughness": "3.5 m",
+      "relief": "80 m",
+      "albedo": "0.15",
+      "source": "Estimate from published data",
+      "measured": false
+    },
+    {
+      "id": "moon",
+      "name": "Lunar south pole near Shackleton",
+      "body": "Moon",
+      "slope": "10.25°",
+      "roughness": "26.36 m",
+      "relief": "1,030 m",
+      "albedo": "0.20",
+      "source": "Measured: NASA LOLA, 9 patches, median",
+      "measured": true
+    }
+  ],
+  "sites": [
+    {
+      "id": "ica-desert",
+      "name": "Ica Desert",
+      "short": "Ica Desert",
+      "country": "Peru",
+      "lat": -14.3,
+      "lng": -75.81,
+      "category": "discovery",
+      "scores": {
+        "jezero": {
+          "value": 74,
+          "approx": true,
+          "rank": 1
+        },
+        "moon": {
+          "value": 40,
+          "approx": true,
+          "rank": 3
+        }
+      },
+      "summary": "The northern continuation of the Atacama. In v2 it scores about 74/100 against Jezero, the highest of all our scored sites and above the Atacama. Its Ica and Nazca–Marcona areas appear far less often in analog research than the Chilean Atacama.",
+      "facts": [
+        "v1 hotspot region: 2,950 km²",
+        "Best match to Jezero Crater among our scored sites (v2)"
+      ],
+      "breaks": "Like every Mars hotspot, it breaks on temperature: even the best Mars hotspots score only 8–16/100 on thermal similarity."
+    },
+    {
+      "id": "atacama-yungay",
+      "name": "Atacama (Yungay)",
+      "short": "Atacama",
+      "country": "Chile",
+      "lat": -23.48,
+      "lng": -69.78,
+      "category": "known",
+      "scores": {
+        "jezero": {
+          "value": 67,
+          "approx": true,
+          "rank": 2
+        },
+        "moon": {
+          "value": 45,
+          "approx": true,
+          "rank": 2
+        }
+      },
+      "summary": "The world's most famous Mars analog. The single largest hotspot on Earth, 34,125 km², is the core Atacama, where NASA and other agencies test Mars rovers and life-detection instruments. TerraX found it without being told where it is.",
+      "facts": [
+        "Largest hotspot on Earth: 34,125 km²",
+        "Ranked last in v1, rose to #2 once dryness was added"
+      ],
+      "breaks": "Breaks on temperature, like every Mars analog on Earth."
+    },
+    {
+      "id": "eastern-desert",
+      "name": "Eastern Desert (Edfu–Marsa Alam)",
+      "short": "Eastern Desert",
+      "country": "Egypt",
+      "lat": 25.64,
+      "lng": 33.68,
+      "category": "discovery",
+      "scores": {
+        "jezero": {
+          "value": 67,
+          "approx": true,
+          "rank": 3
+        },
+        "moon": {
+          "range": "25–37"
+        },
+        "point": {
+          "value": 70,
+          "label": "Sample point 25.64°N, 33.68°E vs Jezero"
+        }
+      },
+      "breakdown": {
+        "Bare ground": 100,
+        "Surface": 98,
+        "Terrain": 78,
+        "Dryness": 78,
+        "Temperature": 9
+      },
+      "summary": "About 14,000 km² of hyper-arid rocky mountains and dry wadis between Aswan, Edfu and the Red Sea. In v2 it scores about 67/100 against Jezero, level with the Atacama, and it lights up again against the Arabia Terra target.",
+      "facts": [
+        "≈ 14,000 km² Mars-analog region",
+        "Sample point scores 70/100 vs Jezero"
+      ],
+      "breaks": "Temperature: the sample point scores only 9/100 on the thermal dimension."
+    },
+    {
+      "id": "dasht-e-lut",
+      "name": "Dasht-e Lut (Gandom Beryan)",
+      "short": "Dasht-e Lut",
+      "country": "Iran",
+      "lat": 30.4,
+      "lng": 58.9,
+      "approxLocation": true,
+      "category": "case",
+      "scores": {
+        "jezero": {
+          "value": 63,
+          "approx": true,
+          "rank": 4
+        },
+        "moon": {
+          "range": "25–37"
+        }
+      },
+      "summary": "Extremely barren, scoring about 63/100 against Jezero Crater.",
+      "facts": [],
+      "breaks": "Breaks on temperature."
+    },
+    {
+      "id": "death-valley",
+      "name": "Death Valley (Badwater)",
+      "short": "Death Valley",
+      "country": "USA",
+      "lat": 36.23,
+      "lng": -116.77,
+      "category": "known",
+      "scores": {
+        "jezero": {
+          "value": 61,
+          "approx": true,
+          "rank": 5
+        },
+        "moon": {
+          "range": "25–37"
+        }
+      },
+      "summary": "One of the best-known Mars analogs, scoring about 61/100 against Jezero Crater in v2.",
+      "facts": [],
+      "breaks": "Breaks on temperature, like every Mars analog on Earth."
+    },
+    {
+      "id": "gobustan-dashgil",
+      "name": "Gobustan mud volcanoes (Dashgil)",
+      "short": "Gobustan",
+      "country": "Azerbaijan",
+      "lat": 39.996,
+      "lng": 49.403,
+      "category": "case",
+      "scores": {
+        "jezero": {
+          "value": 56,
+          "approx": true,
+          "rank": 6
+        },
+        "moon": {
+          "range": "25–37"
+        }
+      },
+      "summary": "A process analog. Gobustan holds one of the world's largest concentrations of mud volcanoes. On Mars, mud volcanism is a leading explanation for thousands of mounds in Arabia Terra and Chryse/Acidalia, linked to subsurface fluids, methane and possible biosignatures. Its value is as a natural laboratory for interpreting Martian mounds, testing methane and fluid-sampling instruments, and training rovers on soft mud breccia.",
+      "facts": [
+        "Surface up to ≈ 318 K (+45 °C)",
+        "Down to ≈ 269 K (−4 °C)",
+        "NDVI ≈ 0.15",
+        "Day–night swing ≈ 14 K"
+      ],
+      "breaks": "It gets far more rain than the Atacama. Its volcanoes are driven by hydrocarbons, under a thick atmosphere and full Earth gravity."
+    },
+    {
+      "id": "masazir",
+      "name": "Absheron – Masazır salt lake",
+      "short": "Masazır",
+      "country": "Azerbaijan",
+      "lat": 40.49,
+      "lng": 49.76,
+      "approxLocation": true,
+      "category": "case",
+      "scores": {
+        "jezero": {
+          "value": 52,
+          "approx": true,
+          "rankRange": "7–10"
+        },
+        "moon": {
+          "range": "25–37"
+        }
+      },
+      "summary": "Scores about 52/100. Its measurement box includes surrounding settlements and vegetation.",
+      "facts": [],
+      "breaks": "Settlements and vegetation inside the box pull the score down."
+    },
+    {
+      "id": "haughton",
+      "name": "Haughton Crater, Devon Island",
+      "short": "Haughton",
+      "country": "Canada",
+      "lat": 75.38,
+      "lng": -89.68,
+      "category": "known",
+      "scores": {
+        "jezero": {
+          "range": "47–52",
+          "rankRange": "7–10"
+        },
+        "moon": {
+          "range": "25–37"
+        }
+      },
+      "summary": "A famous impact-crater analog. TerraX measures environment and terrain, not impact history, mineralogy or caves, which is why Haughton scores low. With Moon-specific weights in v1 it rose from 6th to 2nd.",
+      "facts": [
+        "v1 Moon ranking: 6th → 2nd with Moon weights"
+      ],
+      "breaks": "Its strength, impact history, is not one of the five dimensions TerraX measures."
+    },
+    {
+      "id": "mcmurdo",
+      "name": "McMurdo Dry Valleys (Wright)",
+      "short": "McMurdo",
+      "country": "Antarctica",
+      "lat": -77.5,
+      "lng": 162.0,
+      "category": "known",
+      "scores": {
+        "jezero": {
+          "range": "47–52",
+          "rankRange": "7–10"
+        },
+        "moon": {
+          "value": 58,
+          "approx": true,
+          "rank": 1
+        }
+      },
+      "summary": "The best Moon match on Earth: cold, rugged and barren. Its steep relief matches the lunar south pole's ~1,030 m local relief.",
+      "facts": [
+        "#1 vs the lunar south pole (v2)",
+        "v1 Moon ranking: 5th → 3rd with Moon weights"
+      ],
+      "breaks": "No place on Earth is airless, and nothing approaches the ~40 K cold of permanently shadowed lunar craters."
+    },
+    {
+      "id": "dallol",
+      "name": "Danakil – Dallol",
+      "short": "Dallol",
+      "country": "Ethiopia",
+      "lat": 14.24,
+      "lng": 40.3,
+      "category": "case",
+      "scores": {
+        "jezero": {
+          "range": "47–52",
+          "rankRange": "7–10"
+        },
+        "moon": {
+          "range": "25–37"
+        },
+        "arabia": {
+          "value": 47
+        }
+      },
+      "summary": "Perfectly barren, scoring 47/100 against Arabia Terra.",
+      "facts": [
+        "47/100 vs Arabia Terra"
+      ],
+      "breaks": "Breaks on temperature: 5/100 on the thermal dimension."
+    }
+  ],
+  "hotspots": [
+    {
+      "rank": 1,
+      "lat": 22.86,
+      "lng": 32.62,
+      "place": "Southern Egypt, by Lake Nasser",
+      "area": 500,
+      "type": "Verify: possible lake-edge artifact",
+      "verify": true
+    },
+    {
+      "rank": 2,
+      "lat": -18.96,
+      "lng": -70.15,
+      "place": "Northern Atacama, Chile",
+      "area": 825,
+      "type": "Known analog"
+    },
+    {
+      "rank": 3,
+      "lat": -14.95,
+      "lng": -75.11,
+      "place": "Peruvian coast, Nazca / Marcona",
+      "area": 1450,
+      "type": "New candidate"
+    },
+    {
+      "rank": 4,
+      "lat": -23.48,
+      "lng": -69.78,
+      "place": "Core Atacama, Yungay area",
+      "area": 34125,
+      "type": "Known analog: largest on Earth"
+    },
+    {
+      "rank": 5,
+      "lat": -14.3,
+      "lng": -75.81,
+      "place": "Ica Desert, Peru",
+      "area": 2950,
+      "type": "New candidate"
+    },
+    {
+      "rank": 6,
+      "lat": 22.79,
+      "lng": 33.29,
+      "place": "Wadi Allaqi area, SE Egypt",
+      "area": 1000,
+      "type": "Verify: near Lake Nasser",
+      "verify": true
+    },
+    {
+      "rank": 7,
+      "lat": 24.02,
+      "lng": 33.37,
+      "place": "Eastern Desert, east of Aswan",
+      "area": 5225,
+      "type": "New candidate"
+    },
+    {
+      "rank": 8,
+      "lat": -17.22,
+      "lng": -71.34,
+      "place": "Moquegua / Ilo coast, Peru",
+      "area": 575,
+      "type": "Near Pampas de La Joya (studied)"
+    },
+    {
+      "rank": 9,
+      "lat": -20.22,
+      "lng": -69.56,
+      "place": "Pampa del Tamarugal, Atacama",
+      "area": 5950,
+      "type": "Known analog"
+    },
+    {
+      "rank": 10,
+      "lat": 24.97,
+      "lng": 33.74,
+      "place": "Eastern Desert, Edfu – Marsa Alam",
+      "area": 9100,
+      "type": "New candidate: largest new region"
+    }
+  ],
+  "catalogue": [
+    {
+      "name": "Atacama Desert (Chile)",
+      "lat": -23.0,
+      "lng": -69.9,
+      "radius": 450
+    },
+    {
+      "name": "Pampas de La Joya (Peru)",
+      "lat": -16.7,
+      "lng": -71.9,
+      "radius": 100
+    },
+    {
+      "name": "Death Valley (USA)",
+      "lat": 36.3,
+      "lng": -116.9,
+      "radius": 100
+    },
+    {
+      "name": "Mojave Desert (USA)",
+      "lat": 35.0,
+      "lng": -116.0,
+      "radius": 150
+    },
+    {
+      "name": "Mars Desert Research Station (Utah)",
+      "lat": 38.4,
+      "lng": -110.8,
+      "radius": 100
+    },
+    {
+      "name": "Meteor Crater (Arizona)",
+      "lat": 35.0,
+      "lng": -111.0,
+      "radius": 50
+    },
+    {
+      "name": "Haughton Crater / Devon Island",
+      "lat": 75.4,
+      "lng": -89.7,
+      "radius": 150
+    },
+    {
+      "name": "McMurdo Dry Valleys",
+      "lat": -77.5,
+      "lng": 162.0,
+      "radius": 150
+    },
+    {
+      "name": "Iceland volcanic highlands",
+      "lat": 64.9,
+      "lng": -17.0,
+      "radius": 250
+    },
+    {
+      "name": "Hawaii (Mauna Kea / Kilauea)",
+      "lat": 19.6,
+      "lng": -155.5,
+      "radius": 150
+    },
+    {
+      "name": "Svalbard (AMASE)",
+      "lat": 79.4,
+      "lng": 13.4,
+      "radius": 150
+    },
+    {
+      "name": "Rio Tinto (Spain)",
+      "lat": 37.7,
+      "lng": -6.6,
+      "radius": 50
+    },
+    {
+      "name": "Lanzarote (Spain)",
+      "lat": 29.0,
+      "lng": -13.7,
+      "radius": 60
+    },
+    {
+      "name": "Pilbara (Australia)",
+      "lat": -21.0,
+      "lng": 119.5,
+      "radius": 200
+    },
+    {
+      "name": "Arkaroola (Australia)",
+      "lat": -30.3,
+      "lng": 139.3,
+      "radius": 100
+    },
+    {
+      "name": "Qaidam Basin (China)",
+      "lat": 37.5,
+      "lng": 94.0,
+      "radius": 300
+    },
+    {
+      "name": "Ladakh / Tso Kar (India)",
+      "lat": 33.3,
+      "lng": 78.0,
+      "radius": 100
+    },
+    {
+      "name": "Morocco desert (MARS2013, Erfoud)",
+      "lat": 31.4,
+      "lng": -4.2,
+      "radius": 100
+    },
+    {
+      "name": "Oman desert (AMADEE-18, Dhofar)",
+      "lat": 18.2,
+      "lng": 55.2,
+      "radius": 150
+    },
+    {
+      "name": "Ramon Crater, Negev (AMADEE-20)",
+      "lat": 30.6,
+      "lng": 34.8,
+      "radius": 60
+    },
+    {
+      "name": "Danakil / Dallol (Ethiopia)",
+      "lat": 14.2,
+      "lng": 40.3,
+      "radius": 80
+    }
+  ]
+}
