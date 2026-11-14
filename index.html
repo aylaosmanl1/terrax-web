@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TerraX: Find the Moon and Mars on Earth</title>
+  <meta name="description" content="TerraX maps places on Earth that match the Moon and Mars, using open NASA and ESA data, so mission teams can test equipment before they fly." />
+  <meta name="theme-color" content="#07090F" />
+  <meta property="og:title" content="TerraX: Planetary Analog Research" />
+  <meta property="og:description" content="Find the Moon and Mars on Earth. An interactive map of terrestrial analog sites built on open space-agency data." />
+  <meta property="og:image" content="assets/brand/terrax-logomark-standard-dark.svg" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" href="assets/brand/terrax-favicon-standard-dark.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <a class="skip" href="#map">Skip to the map</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="topbar" id="top">
+    <a class="brand" href="#top" aria-label="TerraX home">
+      <img class="logo logo--dark" src="assets/brand/terrax-wordmark-standard-dark.svg" alt="TerraX" />
+      <img class="logo logo--light" src="assets/brand/terrax-wordmark-standard-light.svg" alt="TerraX" />
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#map">Map</a>
+      <a href="#sites">Sites</a>
+      <a href="#method">Method</a>
+      <a href="#team">Team</a>
+    </nav>
+    <div class="topbar__actions">
+      <button class="icon-btn" id="themeToggle" aria-label="Switch to light mode" title="Switch theme">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+      </button>
+      <a class="btn btn--primary btn--sm" href="#map">Explore the map</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero__stars" aria-hidden="true"></div>
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <p class="eyebrow">Planetary analog research</p>
+          <h1>Find the Moon and Mars <span class="nowrap">on Earth.</span></h1>
+          <p class="lead">TerraX compares open data on Earth, the Moon and Mars to find places on our planet that share their terrain, geology, climate and dust. Mission teams can test rovers, suits and methods there before they fly.</p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#map">Explore the map</a>
+            <a class="btn btn--ghost" href="#method">How it works</a>
+          </div>
+          <dl class="stats" id="stats">
+            <div><dt>Analog sites</dt><dd data-stat="total">–</dd></div>
+            <div><dt>Mars analogs</dt><dd data-stat="mars">–</dd></div>
+            <div><dt>Moon analogs</dt><dd data-stat="moon">–</dd></div>
+            <div><dt>New candidates</dt><dd data-stat="candidate">–</dd></div>
+          </dl>
+        </div>
+        <div class="hero__mark" aria-hidden="true">
+          <svg viewBox="0 0 100 100" class="orbit-mark">
+            <circle class="orbit-ring" cx="50" cy="50" r="40" fill="none" stroke-width="0.6"/>
+            <g class="orbit-star">
+              <path transform="translate(50 50) rotate(-45)" d="M-40 0 C-8.8 0 -13.52 -5.2 0 -5.2 C13.52 -5.2 8.8 0 40 0 C8.8 0 13.52 5.2 0 5.2 C-13.52 5.2 -8.8 0 -40 0 Z"/>
+              <path transform="translate(50 50) rotate(45)" d="M-40 0 C-8.8 0 -13.52 -5.2 0 -5.2 C13.52 -5.2 8.8 0 40 0 C8.8 0 13.52 5.2 0 5.2 C-13.52 5.2 -8.8 0 -40 0 Z"/>
+            </g>
+            <g class="orbit-planet"><circle cx="72.94" cy="17.23" r="4.5"/></g>
+          </svg>
+          <p class="coords mono">24.08°S 70.01°W · ANALOG INDEX 0.91</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MAP ============ -->
+    <section class="map-section" id="map" aria-label="Interactive analog map">
+      <div id="mapCanvas" class="map-canvas"></div>
+      <div class="map-fallback" id="mapFallback" hidden>
+        <p><strong>The map could not load.</strong> Check your internet connection. The site list below still works.</p>
+      </div>
+
+      <!-- Filters -->
+      <aside class="panel filters" id="filters" aria-label="Filters">
+        <div class="panel__head">
+          <h2 class="panel__title">Analog finder</h2>
+          <button class="icon-btn icon-btn--sm filters__collapse" id="filtersToggle" aria-expanded="true" aria-controls="filtersBody" aria-label="Collapse filters">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>
+          </button>
+        </div>
+        <div class="filters__body" id="filtersBody">
+          <div class="field">
+            <span class="label">Analog for</span>
+            <div class="seg" role="group" aria-label="Analog for" id="targetSeg">
+              <button data-target="all" class="is-on">All</button>
+              <button data-target="mars"><i class="dot dot--mars"></i>Mars</button>
+              <button data-target="moon"><i class="dot dot--moon"></i>Moon</button>
+            </div>
+          </div>
+          <div class="field">
+            <span class="label">Environment</span>
+            <div class="chips" id="envChips"></div>
+          </div>
+          <div class="field">
+            <span class="label">Status</span>
+            <div class="seg" role="group" aria-label="Status" id="statusSeg">
+              <button data-status="all" class="is-on">All</button>
+              <button data-status="known">Known</button>
+              <button data-status="candidate">New</button>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label" for="minIndex">Minimum analog index <span class="mono" id="minIndexOut">0.00</span></label>
+            <input type="range" id="minIndex" min="0" max="0.95" step="0.05" value="0" />
+          </div>
+          <div class="field">
+            <span class="label">Layers</span>
+            <label class="toggle"><input type="checkbox" id="heatToggle" checked /> <span>Analog index heatmap</span></label>
+            <div class="seg seg--small" role="group" aria-label="Base map" id="baseSeg">
+              <button data-base="satellite" class="is-on">Satellite</button>
+              <button data-base="dark">Dark</button>
+              <button data-base="light">Light</button>
+            </div>
+          </div>
+          <div class="mini-legend" aria-label="Legend">
+            <div class="legend__row"><i class="dot dot--mars"></i>Mars analog</div>
+            <div class="legend__row"><i class="dot dot--moon"></i>Moon analog</div>
+            <div class="legend__row"><i class="dot dot--new"></i>New candidate</div>
+            <div><div class="ramp"></div><div class="ramp__ticks mono"><span>low index</span><span>high</span></div></div>
+          </div>
+          <p class="filters__count mono" id="resultCount">– sites</p>
+        </div>
+      </aside>
+
+      <!-- Legend -->
+      <div class="panel legend" aria-label="Legend">
+        <div class="legend__row"><i class="dot dot--mars"></i>Mars analog</div>
+        <div class="legend__row"><i class="dot dot--moon"></i>Moon analog</div>
+        <div class="legend__row"><i class="dot dot--new"></i>New candidate</div>
+        <div class="legend__ramp" id="legendRamp">
+          <span class="legend__label mono">Analog index</span>
+          <div class="ramp"></div>
+          <div class="ramp__ticks mono"><span>low</span><span>high</span></div>
+        </div>
+        <span class="badge badge--demo mono">Demo data</span>
+      </div>
+
+      <!-- Site detail drawer -->
+      <aside class="panel drawer" id="drawer" aria-label="Site details" aria-hidden="true">
+        <button class="icon-btn icon-btn--sm drawer__close" id="drawerClose" aria-label="Close details">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+        <div id="drawerBody"></div>
+      </aside>
+    </section>
+
+    <!-- ============ SITES ============ -->
+    <section class="section" id="sites">
+      <div class="container">
+        <header class="section__head">
+          <p class="eyebrow mono">01</p>
+          <h2>Analog sites</h2>
+          <p class="section__lead">Every site we score, from proven training grounds to new candidates found by our analysis. The map filters apply here too.</p>
+          <div class="sort">
+            <label for="sortBy" class="label">Sort by</label>
+            <select id="sortBy">
+              <option value="index">Analog index</option>
+              <option value="name">Name</option>
+              <option value="country">Country</option>
+            </select>
+          </div>
+        </header>
+        <div class="cards" id="siteCards"></div>
+      </div>
+    </section>
+
+    <!-- ============ METHOD ============ -->
+    <section class="section section--alt" id="method">
+      <div class="container">
+        <header class="section__head">
+          <p class="eyebrow mono">02</p>
+          <h2>How TerraX finds analogs</h2>
+          <p class="section__lead">We describe every place on Earth, the Moon and Mars with the same set of measurable features, then score how closely they match.</p>
+        </header>
+        <ol class="steps">
+          <li>
+            <span class="steps__n mono">01</span>
+            <h3>Collect open data</h3>
+            <p>Satellite and orbiter data from NASA, ESA and other agencies: elevation, surface temperature, minerals, dust and UV.</p>
+          </li>
+          <li>
+            <span class="steps__n mono">02</span>
+            <h3>Build features</h3>
+            <p>Turn raw layers into comparable features: aridity, temperature range, slope and roughness, geology, dust load and radiation.</p>
+          </li>
+          <li>
+            <span class="steps__n mono">03</span>
+            <h3>Score similarity</h3>
+            <p>Compare each Earth location with a target site on the Moon or Mars. The result is an analog index from 0 to 1.</p>
+          </li>
+          <li>
+            <span class="steps__n mono">04</span>
+            <h3>Check and rank</h3>
+            <p>Validate against well-known analogs like Atacama and Haughton Crater, then rank new candidates for field teams.</p>
+          </li>
+        </ol>
+
+        <div class="datasets">
+          <div class="datasets__col">
+            <h3><span class="dot dot--earth"></span>Earth</h3>
+            <ul>
+              <li>MODIS land surface temperature and aerosols</li>
+              <li>Landsat 8/9 and Sentinel-2 imagery</li>
+              <li>SRTM and Copernicus elevation</li>
+              <li>MERRA-2 dust reanalysis</li>
+              <li>Google Earth Engine processing</li>
+            </ul>
+          </div>
+          <div class="datasets__col">
+            <h3><span class="dot dot--mars"></span>Mars</h3>
+            <ul>
+              <li>MGS MOLA elevation</li>
+              <li>Mars Odyssey THEMIS thermal data</li>
+              <li>MRO CRISM minerals</li>
+              <li>MRO HiRISE and CTX imagery</li>
+            </ul>
+          </div>
+          <div class="datasets__col">
+            <h3><span class="dot dot--moon"></span>Moon</h3>
+            <ul>
+              <li>LRO LOLA elevation</li>
+              <li>LRO Diviner surface temperature</li>
+              <li>LRO LROC imagery</li>
+              <li>Moon Mineralogy Mapper (M3)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TEAM ============ -->
+    <section class="section team" id="team">
+      <div class="container team__grid">
+        <div>
+          <p class="eyebrow mono">03</p>
+          <h2>Made in Azerbaijan</h2>
+          <p class="section__lead">TerraX is built by a team from Azerbaijan, a country with hundreds of mud volcanoes and some of the most Mars-like landscapes in the Caucasus.</p>
+          <div class="members" id="members">
+            <div class="member"><span class="avatar mono">A</span><div><strong>Team member</strong><span>Design and web</span></div></div>
+            <div class="member"><span class="avatar mono">B</span><div><strong>Team member</strong><span>Earth Engine and data</span></div></div>
+            <div class="member"><span class="avatar mono">C</span><div><strong>Team member</strong><span>Planetary science</span></div></div>
+            <div class="member"><span class="avatar mono">D</span><div><strong>Team member</strong><span>Research and pitch</span></div></div>
+          </div>
+        </div>
+        <div class="team__badge">
+          <img class="logo--dark" src="assets/brand/terrax-logomark-azerbaijan-dark.svg" alt="TerraX Azerbaijan edition logomark" />
+          <img class="logo--light" src="assets/brand/terrax-logomark-azerbaijan-light.svg" alt="TerraX Azerbaijan edition logomark" />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <img class="logo logo--dark" src="assets/brand/terrax-wordmark-azerbaijan-dark.svg" alt="TerraX" />
+        <img class="logo logo--light" src="assets/brand/terrax-wordmark-azerbaijan-light.svg" alt="TerraX" />
+        <p class="mono footer__tag">PLANETARY ANALOG RESEARCH</p>
+      </div>
+      <p class="footer__note">Built with open data from NASA, ESA and other space agencies. Scores shown are demo values until our analysis is final. Imagery © Esri, Maxar, Earthstar Geographics. Maps © OpenStreetMap contributors, © CARTO.</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
