@@ -383,11 +383,11 @@ strong { font-weight: 600; }
 
 /* team */
 .team__grid { display: grid; grid-template-columns: 1.4fr .6fr; gap: 48px; align-items: center; }
-.members { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-.member { display: flex; gap: 14px; align-items: flex-start; padding: 16px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); }
-.member strong { display: block; font-size: 15px; }
-.member .role { display: block; font-size: 12.5px; color: var(--mars-text); margin-top: 2px; }
-.member p { font-size: 13.5px; color: var(--muted); margin-top: 6px; }
+.members { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.member { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; padding: 24px 14px 22px; border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--surface); }
+.member__photo { width: 128px; height: 128px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border); box-shadow: 0 0 40px rgba(47, 91, 255, .18); margin-bottom: 14px; }
+.member strong { display: block; font-size: 15.5px; line-height: 1.3; }
+.member .role { display: block; font-size: 13px; color: var(--mars-text); margin-top: 2px; }
 .avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); border: 1px solid var(--border); font-size: 14px; flex: none; }
 .team__badge { display: grid; justify-items: center; gap: 12px; }
 .team__badge img { width: min(220px, 100%); }
@@ -482,6 +482,7 @@ strong { font-weight: 600; }
 @media (max-width: 900px) {
   .nav { display: none; }
   .split, .scoring, .two-col, .app-grid, .team__grid, .rank-grid, .disc, .disc__card--wide { grid-template-columns: 1fr; }
+  .members { grid-template-columns: repeat(2, 1fr); }
   .split .section__head { position: static; margin-bottom: 8px; }
   .disc__card--wide > .shot { grid-column: 1; grid-row: auto; }
   .weights { margin-top: 0; }
@@ -493,7 +494,9 @@ strong { font-weight: 600; }
   .topbar { gap: 12px; padding: 0 16px; }
   .brand .logo { height: 26px; }
   .topbar .btn--sm { display: none; }
-  .dims, .targets, .next, .obs, .problems, .story, .members { grid-template-columns: 1fr; }
+  .dims, .targets, .next, .obs, .problems, .story { grid-template-columns: 1fr; }
+  .members { grid-template-columns: 1fr 1fr; }
+  .member__photo { width: 104px; height: 104px; }
   .timeline { grid-template-columns: 1fr 1fr; }
   .tiles { grid-template-columns: 1fr 1fr; }
   .tile { padding: 18px 16px; }
@@ -514,4 +517,19 @@ strong { font-weight: 600; }
 }
 @media (max-width: 720px) {
   .tile__num { font-size: 1.55rem; }
+}
+
+/* final charts (team data, 14 Nov) */
+.rank--flat { padding: 0; border: 0; background: none; margin-top: 28px; }
+.rank--wide { margin-bottom: 40px; }
+.hbar--static { cursor: default; }
+.hbar--alert .hbar__name, .hbar--alert .hbar__val { color: var(--mars-text); font-weight: 600; }
+.hbar__note { font-size: 13px; color: var(--mars-text); padding: 2px 4px 8px; }
+.hbar__note.muted { color: var(--muted); padding-top: 10px; }
+.hbar--wide { grid-template-columns: 240px 1fr 52px; }
+.hbar__name small { display: block; font-size: 12px; color: var(--muted); font-weight: 400; }
+.rank--wide .hbar, .rank--wide .hbar__axis { grid-template-columns: 170px 1fr 52px; }
+@media (max-width: 720px) {
+  .hbar--wide, .hbar__axis.hbar--wide { grid-template-columns: 150px 1fr 40px; }
+  .rank--wide .hbar, .rank--wide .hbar__axis { grid-template-columns: 110px 1fr 40px; }
 }

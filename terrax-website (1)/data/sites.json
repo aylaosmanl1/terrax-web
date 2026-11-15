@@ -1,5 +1,5 @@
 {
-  "_note": "All numbers come from the TerraX Full Project Report (14 Nov 2026). Values marked approx were read from charts (shown as ≈); check them against the final CSV exports. Ranges (e.g. 47-52) are shown as given in the report.",
+  "_note": "Numbers come from the TerraX Full Project Report and the team's final charts (14 Nov 2026). Values marked approx are shown with ≈.",
   "targets": [
     {
       "id": "jezero",
@@ -69,13 +69,15 @@
       "scores": {
         "jezero": {
           "value": 74,
-          "approx": true,
           "rank": 1
         },
         "moon": {
           "value": 40,
           "approx": true,
           "rank": 3
+        },
+        "mars4": {
+          "value": 70
         }
       },
       "summary": "The northern continuation of the Atacama. In v2 it scores about 74/100 against Jezero, the highest of all our scored sites and above the Atacama. Its Ica and Nazca–Marcona areas appear far less often in analog research than the Chilean Atacama.",
@@ -83,7 +85,15 @@
         "v1 hotspot region: 2,950 km²",
         "Best match to Jezero Crater among our scored sites (v2)"
       ],
-      "breaks": "Like every Mars hotspot, it breaks on temperature: even the best Mars hotspots score only 8–16/100 on thermal similarity."
+      "breaks": "Temperature: 14/100. Earth never reaches the Martian day–night temperature swing.",
+      "breakdown": {
+        "Bare ground": 100,
+        "Terrain": 98,
+        "Dryness": 79,
+        "Surface": 78,
+        "Temperature": 14
+      },
+      "breakdownLabel": "Score breakdown vs Jezero"
     },
     {
       "id": "atacama-yungay",
@@ -96,13 +106,15 @@
       "scores": {
         "jezero": {
           "value": 67,
-          "approx": true,
           "rank": 2
         },
         "moon": {
           "value": 45,
           "approx": true,
           "rank": 2
+        },
+        "mars4": {
+          "value": 68
         }
       },
       "summary": "The world's most famous Mars analog. The single largest hotspot on Earth, 34,125 km², is the core Atacama, where NASA and other agencies test Mars rovers and life-detection instruments. TerraX found it without being told where it is.",
@@ -123,7 +135,6 @@
       "scores": {
         "jezero": {
           "value": 67,
-          "approx": true,
           "rank": 3
         },
         "moon": {
@@ -132,6 +143,9 @@
         "point": {
           "value": 70,
           "label": "Sample point 25.64°N, 33.68°E vs Jezero"
+        },
+        "mars4": {
+          "value": 66
         }
       },
       "breakdown": {
@@ -146,7 +160,8 @@
         "≈ 14,000 km² Mars-analog region",
         "Sample point scores 70/100 vs Jezero"
       ],
-      "breaks": "Temperature: the sample point scores only 9/100 on the thermal dimension."
+      "breaks": "Temperature: the sample point scores only 9/100 on the thermal dimension.",
+      "breakdownLabel": "Sample point 25.64°N, 33.68°E vs Jezero"
     },
     {
       "id": "dasht-e-lut",
@@ -160,11 +175,13 @@
       "scores": {
         "jezero": {
           "value": 63,
-          "approx": true,
           "rank": 4
         },
         "moon": {
           "range": "25–37"
+        },
+        "mars4": {
+          "value": 58
         }
       },
       "summary": "Extremely barren, scoring about 63/100 against Jezero Crater.",
@@ -182,11 +199,13 @@
       "scores": {
         "jezero": {
           "value": 61,
-          "approx": true,
           "rank": 5
         },
         "moon": {
           "range": "25–37"
+        },
+        "mars4": {
+          "value": 59
         }
       },
       "summary": "One of the best-known Mars analogs, scoring about 61/100 against Jezero Crater in v2.",
@@ -204,11 +223,13 @@
       "scores": {
         "jezero": {
           "value": 56,
-          "approx": true,
           "rank": 6
         },
         "moon": {
           "range": "25–37"
+        },
+        "mars4": {
+          "value": 52
         }
       },
       "summary": "A process analog. Gobustan holds one of the world's largest concentrations of mud volcanoes. On Mars, mud volcanism is a leading explanation for thousands of mounds in Arabia Terra and Chryse/Acidalia, linked to subsurface fluids, methane and possible biosignatures. Its value is as a natural laboratory for interpreting Martian mounds, testing methane and fluid-sampling instruments, and training rovers on soft mud breccia.",
@@ -232,8 +253,7 @@
       "scores": {
         "jezero": {
           "value": 52,
-          "approx": true,
-          "rankRange": "7–10"
+          "rank": 7
         },
         "moon": {
           "range": "25–37"
@@ -253,8 +273,8 @@
       "category": "known",
       "scores": {
         "jezero": {
-          "range": "47–52",
-          "rankRange": "7–10"
+          "value": 51,
+          "rank": 8
         },
         "moon": {
           "range": "25–37"
@@ -276,12 +296,11 @@
       "category": "known",
       "scores": {
         "jezero": {
-          "range": "47–52",
-          "rankRange": "7–10"
+          "value": 47,
+          "rank": 9
         },
         "moon": {
           "value": 58,
-          "approx": true,
           "rank": 1
         }
       },
@@ -302,8 +321,8 @@
       "category": "case",
       "scores": {
         "jezero": {
-          "range": "47–52",
-          "rankRange": "7–10"
+          "value": 47,
+          "rank": 10
         },
         "moon": {
           "range": "25–37"

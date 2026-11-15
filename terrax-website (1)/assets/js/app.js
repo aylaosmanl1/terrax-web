@@ -16,7 +16,7 @@
     discovery: { color: "#B35BD6", label: "TerraX discovery" },
     case: { color: "#C9812A", label: "Case-study site" }
   };
-  const TARGET_NAME = { jezero: "Jezero Crater (Mars)", moon: "the lunar south pole (Moon)", arabia: "Arabia Terra (Mars)" };
+  const TARGET_NAME = { jezero: "Jezero Crater (Mars)", moon: "the lunar south pole (Moon)", arabia: "Arabia Terra (Mars)", mars4: "the average of 4 Mars sites" };
   const RING = "#F1EBDD";
 
   const state = { sites: [], hotspots: [], catalogue: [], targets: [], target: "jezero", selected: null, base: "satellite" };
@@ -107,6 +107,9 @@
       renderTargets();
       renderRanking("#rankJezero", "jezero");
       renderRanking("#rankMoon", "moon");
+      renderRanking("#rankMars4", "mars4");
+      renderMarsVsMoon();
+      renderBreakdownChart("#icaBars", "ica-desert");
       renderEgypt();
       renderHotspotTable();
       initMap();
@@ -193,6 +196,41 @@
         <div class="mbar__track"><i style="width:${v}%;background:${color}"></i></div>
         <span class="mono">${v}</span>
       </div>`).join("");
+  }
+
+  // one site's five dimensions; the weakest (temperature) is called out in Mars orange, with words, not colour alone
+  function renderBreakdownChart(sel, id) {
+    const el = $(sel);
+    const s = state.sites.find((x) => x.id === id);
+    if (!el || !s || !s.breakdown) return;
+    const rows = Object.entries(s.breakdown);
+    const min = Math.min(...rows.map(([, v]) => v));
+    el.innerHTML = rows.map(([k, v]) => `
+      <div class="hbar hbar--static${v === min ? " hbar--alert" : ""}" tabindex="0" data-tip="${esc(`<strong>${k}</strong><br>${v}/100 vs Jezero Crater`)}">
+        <span class="hbar__name">${esc(k)}</span>
+        <div class="hbar__track"><i class="hbar__fill" style="left:0;width:${v}%;--c:${v === min ? "#C9562C" : "#8FA3C7"}"></i></div>
+        <span class="hbar__val mono">${v}</span>
+      </div>${v === min ? `<p class="hbar__note">↑ the analogy breaks here: ${esc(k.toLowerCase())}, ${v}/100</p>` : ""}`).join("") +
+      `<div class="hbar__axis mono" aria-hidden="true"><span></span><span class="hbar__ticks"><i>0</i><i>25</i><i>50</i><i>75</i><i>100</i></span><span></span></div>`;
+    bindTips(el);
+  }
+
+  function renderMarsVsMoon() {
+    const el = $("#marsVsMoon");
+    if (!el) return;
+    const rows = [
+      { name: "Mars · Jezero Crater", best: "Ica Desert, Peru", v: 74, c: "#C9562C", id: "ica-desert", t: "jezero" },
+      { name: "Moon · south pole near Shackleton", best: "McMurdo Dry Valleys", v: 58, c: "#8FA3C7", id: "mcmurdo", t: "moon" }
+    ];
+    el.innerHTML = rows.map((r) => `
+      <button class="hbar hbar--wide" data-jump="${r.id}" data-target-switch="${r.t}" data-tip="${esc(`<strong>${r.name}</strong><br>Best match: ${r.best}<br>${r.v}/100`)}">
+        <span class="hbar__name">${esc(r.name)}<small>best match: ${esc(r.best)}</small></span>
+        <div class="hbar__track"><i class="hbar__fill" style="left:0;width:${r.v}%;--c:${r.c}"></i></div>
+        <span class="hbar__val mono">${r.v}</span>
+      </button>`).join("") +
+      `<div class="hbar__axis hbar--wide mono" aria-hidden="true"><span></span><span class="hbar__ticks"><i>0</i><i>25</i><i>50</i><i>75</i><i>100</i></span><span></span></div>` +
+      `<p class="hbar__note muted">Why: no place on Earth is airless, and nothing comes close to the extreme cold of the lunar poles.</p>`;
+    bindTips(el);
   }
 
   function renderEgypt() {
@@ -293,7 +331,7 @@
 
       <p class="d-summary">${esc(s.summary || "")}</p>
 
-      ${s.breakdown ? `<div class="d-section"><h3>Score breakdown · sample point vs Jezero</h3><div class="mbars">${miniBars(s.breakdown, cat.color)}</div></div>` : ""}
+      ${s.breakdown ? `<div class="d-section"><h3>${esc(s.breakdownLabel || "Score breakdown vs Jezero")}</h3><div class="mbars">${miniBars(s.breakdown, cat.color)}</div></div>` : ""}
       ${facts || extra ? `<div class="d-section"><h3>Key facts</h3><ul class="d-list">${facts}${extra}</ul></div>` : ""}
       ${s.breaks ? `<div class="d-section d-breaks"><h3>Where the analogy breaks</h3><p>${esc(s.breaks)}</p></div>` : ""}
 
