@@ -383,7 +383,7 @@ strong { font-weight: 600; }
 
 /* team */
 .team__grid { display: grid; grid-template-columns: 1.4fr .6fr; gap: 48px; align-items: center; }
-.members { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.members { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .member { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; padding: 24px 14px 22px; border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--surface); }
 .member__photo { width: 128px; height: 128px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border); box-shadow: 0 0 40px rgba(47, 91, 255, .18); margin-bottom: 14px; }
 .member strong { display: block; font-size: 15.5px; line-height: 1.3; }
@@ -496,6 +496,7 @@ strong { font-weight: 600; }
   .topbar .btn--sm { display: none; }
   .dims, .targets, .next, .obs, .problems, .story { grid-template-columns: 1fr; }
   .members { grid-template-columns: 1fr 1fr; }
+  .member:last-child:nth-child(odd) { grid-column: 1 / -1; }
   .member__photo { width: 104px; height: 104px; }
   .timeline { grid-template-columns: 1fr 1fr; }
   .tiles { grid-template-columns: 1fr 1fr; }
